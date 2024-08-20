@@ -1,9 +1,14 @@
 <script lang="ts">
     import type { PageData } from "./$types";
+    import { formatDateToString } from "$lib/date"
+    import { currentDate} from "$lib/stores/sharedStore"
 
     export let data: PageData
 
     $: ({ attendances } = data)
+    currentDate.subscribe(value => {
+        console.log(value)
+    })
 </script>
 
 <div class="container">
@@ -19,7 +24,7 @@
 <div class="container">
     <div class="attendances">
         {#each attendances as attendance}
-            <div>{attendance.name}</div>
+            <div>{attendance.name} <br> {formatDateToString(attendance.date)}</div>
         {/each}
     </div>
 </div>
