@@ -1,2 +1,51 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script lang="ts">
+    import type { PageData } from "./$types";
+
+    export let data: PageData
+
+    $: ({ attendances } = data)
+</script>
+
+<div class="container">
+    <form action="?/createAttendance" method="post">
+        <label>
+            Name
+            <input name="name" type="text"/>
+        </label>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<div class="container">
+    <div class="attendances">
+        {#each attendances as attendance}
+            <div>{attendance.name}</div>
+        {/each}
+    </div>
+</div>
+
+<style>
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 50px;
+        border-radius: 30px;
+        width: 500px;
+        margin: 20px;
+        max-height: 50vh;
+        background-color: var(--primary-color);
+    }
+
+    .attendances {
+        box-sizing: border-box;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow-y: scroll;
+        height: 100%;
+        width: 100%;
+    }
+</style>
