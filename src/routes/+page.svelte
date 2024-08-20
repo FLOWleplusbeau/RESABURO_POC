@@ -1,17 +1,19 @@
 <script lang="ts">
     import type { PageData } from "./$types";
-    import { formatDateToString } from "$lib/date"
+    import { formatDateStringToDate, formatDateToString } from "$lib/date"
     import { currentDate} from "$lib/stores/sharedStore"
 
     export let data: PageData
+    let date: Date = new Date();
 
     $: ({ attendances } = data)
     currentDate.subscribe(value => {
-        console.log(value)
+        date = formatDateStringToDate(value);
     })
 </script>
 
 <div class="container">
+    {formatDateToString(date)}
     <form action="?/createAttendance" method="post">
         <label>
             Name

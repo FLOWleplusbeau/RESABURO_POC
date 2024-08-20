@@ -6,6 +6,7 @@ export const load: PageServerLoad = async () => {
     return {
         attendances: await prisma.attendance.findMany(),
     }
+    
 };
 
 export const actions: Actions = {
