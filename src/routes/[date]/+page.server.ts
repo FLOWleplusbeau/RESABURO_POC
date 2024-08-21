@@ -17,6 +17,7 @@ export const load: PageServerLoad = async (page) => {
                 gte: startOfDay,
                 lt: endOfDay,
             },
+            attended: true,
         },
     });
 
@@ -27,14 +28,18 @@ export const load: PageServerLoad = async (page) => {
 
 export const actions: Actions = {
     createAttendance: async ({request}) => {
-        const { name, date } = Object.fromEntries(await request.formData()) as unknown as { name: string, date: Date };
-        console.log(name, date);
+        const { name, date, attended} = Object.fromEntries(await request.formData()) as unknown as { name: string, date: Date, attended: string };
+        let isAttended: boolean = attended ? true : false;
+
+        if (name === "")
+            return fail(400, { message: "Name is required" });
+
         try {
             await prisma.attendance.create({
                 data: {
                     name,
                     date: new Date(date),
-                    attended: false,
+                    attended: isAttended,
                 },
             });
         } catch (error) {

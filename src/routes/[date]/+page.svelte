@@ -24,6 +24,9 @@
         <label class="invisible">
             <input name="date" type="date" value={dateString}/>
         </label>
+        <label>
+            <input name="attended" type="radio"> At office
+        </label>
         <button type="submit">Submit</button>
     </form>
 </div>
