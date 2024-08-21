@@ -1,7 +1,8 @@
 <script lang="ts">
     import type { PageData } from "./$types";
-    import { formatDateStringToDate, formatDateToString } from "$lib/date";
+    import { formatDateStringToDate, formatDateToString } from "$lib/utils/date";
     import { currentDate } from "$lib/stores/sharedStore";
+    import AttendancesDisplay from "$lib/components/attendancesDisplay.svelte";
 
     export let data: PageData;
     let date: Date = new Date();
@@ -14,41 +15,61 @@
     });
 </script>
 
-<div class="container">
-    {formatDateToString(date)}
+<div class="wrapper1">
     <form action="?/createAttendance" method="post">
+        {formatDateToString(date)}
         <label>
-            Name
-            <input name="name" type="text"/>
+            <input name="name" type="text" placeholder="Full Name"/>
         </label>
         <label class="invisible">
-            Date
             <input name="date" type="date" value={dateString}/>
         </label>
         <button type="submit">Submit</button>
     </form>
 </div>
 
-<div class="container">
-    <div class="attendances">
-        {#each attendances as attendance}
-            <div>{attendance.name} <br> {formatDateToString(attendance.date)}</div>
-        {/each}
-    </div>
+<div class="wrapper2">
+    <AttendancesDisplay {attendances} />
 </div>
 
 <style>
-    .container {
+    form {
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: space-around;
         align-items: center;
-        padding: 50px;
+        padding: 10px;
         border-radius: 30px;
-        width: 500px;
-        margin: 20px;
+        width: 100%;
+        height: 100%;
         max-height: 50vh;
         background-color: var(--primary-color);
+    }
+
+    form button {
+        padding: 10px;
+        border-radius: 10px;
+        background-color: var(--accent-color);
+        color: white;
+        font-size: 1.2rem;
+        cursor: pointer;
+    }
+
+    form button:hover {
+        background-color: var(--accent-color-hover);
+        color: black;
+    }
+
+    .wrapper1 {
+        height: 25vh;
+        width: 500px;
+        margin: 20px;
+    }
+
+    .wrapper2 {
+        height: 50vh;
+        width: 500px;
+        margin: 20px;
     }
 
     .attendances {

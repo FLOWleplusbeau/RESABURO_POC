@@ -1,10 +1,8 @@
 <script lang="ts">
     import '$lib/global.css';
-    import { formatDateToString } from "$lib/date"
     import { currentDate } from "$lib/stores/sharedStore"
     import { browser } from '$app/environment';
     import { goto } from '$app/navigation';
-    import { onMount } from 'svelte';
     import { page } from '$app/stores';
 
     export let date: Date;
