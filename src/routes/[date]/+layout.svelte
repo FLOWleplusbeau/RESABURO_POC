@@ -5,12 +5,10 @@
     import { goto } from '$app/navigation';
     import { page } from '$app/stores';
 
-    export let date: Date;
     let dateString: string = $page.params.date;
 
-    $: date = new Date(dateString);
     $: currentDate.set(dateString);
-    $: if (browser && date) goto(`/${dateString}`);
+    $: if (browser && dateString) goto(`/${dateString}`);
 
     function deleteAttendances() {
         fetch('api/deleteAttendances', { method: 'DELETE' })
@@ -19,7 +17,10 @@
                 else console.error('Failed to delete attendances');
             })
             .catch(error => console.error('Network error:', error));
-        location.reload();
+
+        setTimeout(() => {
+            location.reload();
+        }, 500);
     }
 </script>
   
