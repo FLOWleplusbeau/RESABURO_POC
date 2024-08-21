@@ -72,17 +72,6 @@
         margin: 20px;
     }
 
-    .attendances {
-        box-sizing: border-box;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        overflow-y: scroll;
-        height: 100%;
-        width: 100%;
-    }
-
     .invisible {
         display: none;
     }
