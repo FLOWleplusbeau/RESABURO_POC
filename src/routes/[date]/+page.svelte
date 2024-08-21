@@ -1,15 +1,17 @@
 <script lang="ts">
     import type { PageData } from "./$types";
-    import { formatDateStringToDate, formatDateToString } from "$lib/date"
-    import { currentDate} from "$lib/stores/sharedStore"
+    import { formatDateStringToDate, formatDateToString } from "$lib/date";
+    import { currentDate } from "$lib/stores/sharedStore";
 
-    export let data: PageData
+    export let data: PageData;
     let date: Date = new Date();
+    let dateString: string = formatDateToString(date);
 
-    $: ({ attendances } = data)
+    $: ({ attendances } = data);
     currentDate.subscribe(value => {
+        dateString = value;
         date = formatDateStringToDate(value);
-    })
+    });
 </script>
 
 <div class="container">
@@ -18,6 +20,10 @@
         <label>
             Name
             <input name="name" type="text"/>
+        </label>
+        <label class="invisible">
+            Date
+            <input name="date" type="date" value={dateString}/>
         </label>
         <button type="submit">Submit</button>
     </form>
@@ -54,5 +60,9 @@
         overflow-y: scroll;
         height: 100%;
         width: 100%;
+    }
+
+    .invisible {
+        display: none;
     }
 </style>

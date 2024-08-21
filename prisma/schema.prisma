@@ -11,8 +11,8 @@ datasource db {
 }
 
 model Attendance {
-  id        Int     @id @default(autoincrement())
+  id        String     @id @default(cuid())
   name      String
-  date      DateTime
-  attended  Boolean
+  date      DateTime   @default(now())
+  attended  Boolean    @default(true)
 }

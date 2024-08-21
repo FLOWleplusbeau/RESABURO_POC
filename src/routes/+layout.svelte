@@ -2,12 +2,17 @@
     import '$lib/global.css';
     import { formatDateToString } from "$lib/date"
     import { currentDate } from "$lib/stores/sharedStore"
+    import { browser } from '$app/environment';
+    import { goto } from '$app/navigation';
+    import { onMount } from 'svelte';
+    import { page } from '$app/stores';
 
     export let date: Date;
-    let dateString: string = formatDateToString(new Date);
+    let dateString: string = $page.params.date;
 
     $: date = new Date(dateString);
     $: currentDate.set(dateString);
+    $: if (browser && date) goto(`/${dateString}`);
 </script>
   
 <div class="app">
