@@ -71,6 +71,7 @@
 
     .wrapper2 {
         flex-grow: 1;
+        max-height: 60vh;
         width: 500px;
     }
 
