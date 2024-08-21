@@ -11,7 +11,7 @@
     $: if (browser && dateString) goto(`/${dateString}`);
 
     function deleteAttendances() {
-        fetch('api/deleteAttendances', { method: 'DELETE' })
+        fetch('api/deleteAttendance/all', { method: 'DELETE' })
             .then(response => {
                 if (response.ok) console.log('Attendances deleted successfully');
                 else console.error('Failed to delete attendances');
