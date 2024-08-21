@@ -11,11 +11,22 @@
     $: date = new Date(dateString);
     $: currentDate.set(dateString);
     $: if (browser && date) goto(`/${dateString}`);
+
+    function deleteAttendances() {
+        fetch('api/deleteAttendances', { method: 'DELETE' })
+            .then(response => {
+                if (response.ok) console.log('Attendances deleted successfully');
+                else console.error('Failed to delete attendances');
+            })
+            .catch(error => console.error('Network error:', error));
+        location.reload();
+    }
 </script>
   
 <div class="app">
     <header>
         <input type="date" bind:value={dateString}>
+        <button on:click={deleteAttendances}>delete attendance</button>
     </header>
     <div class="wrapper">
         <slot></slot>
@@ -39,9 +50,11 @@
     header {
         display: flex;
         align-items: center;
+        justify-content: space-between;
         background-color: var(--secondary-color);
         height: 10vh;
         padding-left: 100px;
+        padding-right: 100px;
     }
 </style>
 

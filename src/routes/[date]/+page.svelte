@@ -9,6 +9,7 @@
     let dateString: string = formatDateToString(date);
 
     $: ({ attendances } = data);
+
     currentDate.subscribe(value => {
         dateString = value;
         date = formatDateStringToDate(value);
