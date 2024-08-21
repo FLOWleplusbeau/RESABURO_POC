@@ -1,11 +1,23 @@
 <script lang="ts">
     import { formatDateToString } from '$lib/utils/date';
     export let attendances: any[] = [];
+
+    function deleteAttendance(attendance: any) {
+        fetch(`api/deleteAttendance/${attendance.id}`, { method: 'DELETE' })
+            .then(response => {
+                if (response.ok) attendances = attendances.filter(a => a.id !== attendance.id);
+                else console.error('Failed to delete attendance');
+            })
+            .catch(error => console.error('Network error:', error));
+    }
 </script>
 
 <div class="container">
     {#each attendances as attendance}
-        <div class="attendance">{attendance.name}</div>
+        <div class="attendance">
+            {attendance.name}
+            <button on:click={() => deleteAttendance(attendance)}>delete</button>
+        </div>
     {/each}
 </div>
 

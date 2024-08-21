@@ -17,7 +17,7 @@
                 else console.error('Failed to delete attendances');
             })
             .catch(error => console.error('Network error:', error));
-
+        
         setTimeout(() => {
             location.reload();
         }, 500);
