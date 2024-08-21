@@ -67,13 +67,11 @@
     .wrapper1 {
         height: 25vh;
         width: 500px;
-        margin: 20px;
     }
 
     .wrapper2 {
-        height: 50vh;
+        flex-grow: 1;
         width: 500px;
-        margin: 20px;
     }
 
     .invisible {

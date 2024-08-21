@@ -42,10 +42,12 @@
 
     .wrapper {
         height: 90vh;
+        gap: 20px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
+        justify-content: space-evenly;
+        padding: 20px;
     }
 
     header {
