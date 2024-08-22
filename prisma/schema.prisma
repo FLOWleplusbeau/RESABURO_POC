@@ -12,7 +12,17 @@ datasource db {
 
 model Attendance {
   id        String     @id @default(cuid())
-  name      String
+  userId    String?    @default(cuid())
+  user      User?      @relation(fields: [userId], references: [id])
   date      DateTime   @default(now())
   attended  Boolean    @default(true)
+}
+
+model User {
+  id          String      @id @default(cuid())
+  name        String
+  email       String      @unique
+  password    String
+  role        String      @default("USER")
+  attendances Attendance[]
 }
