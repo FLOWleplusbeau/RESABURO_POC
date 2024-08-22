@@ -1,4 +1,4 @@
-import { fail, type Actions } from "@sveltejs/kit";
+import { fail, redirect, type Actions } from "@sveltejs/kit";
 import { prisma } from "$lib/server/prisma";
 import { hashPassword, createJwtToken } from "$lib/server/auth";
 import type { PageServerLoad } from "./$types";
@@ -37,12 +37,7 @@ export const actions: Actions = {
 
       setAuthCookie(cookies, token);
 
-      return {
-        status: 201,
-        body: {
-          message: "Register Successfull",
-        },
-      };
+      throw redirect(303, "/test");
     } catch (error) {
       return fail(500, { error: "Failed Register" });
     }
