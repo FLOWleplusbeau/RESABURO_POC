@@ -1,8 +1,9 @@
 <script lang="ts">
-    import { formatDateToString } from '$lib/utils/date';
-    export let attendances: any[] = [];
+    import type { Attendance, User } from "@prisma/client";
 
-    function deleteAttendance(attendance: any) {
+    export let attendances: (Attendance & { user: User })[] = [];
+
+    function deleteAttendance(attendance: Attendance) {
         fetch(`api/deleteAttendance/${attendance.id}`, { method: 'DELETE' })
             .then(response => {
                 if (response.ok) attendances = attendances.filter(a => a.id !== attendance.id);
@@ -22,13 +23,12 @@
         {/if}
         {#each attendances as attendance}
             <div class="attendance">
-                {attendance.name}
+                {attendance.user.name}
                 <button on:click={() => deleteAttendance(attendance)}>delete</button>
             </div>  
         {/each}
     </div>
 </div>
-
 <style>
     .container {
         display: flex;

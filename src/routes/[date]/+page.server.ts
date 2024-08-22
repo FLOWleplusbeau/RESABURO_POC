@@ -1,6 +1,7 @@
 import { fail, type Actions, type RequestHandler } from "@sveltejs/kit";
 import { prisma } from "$lib/server/prisma";
 import type { PageServerLoad } from "./$types";
+import type { User } from "@prisma/client";
 
 export const load: PageServerLoad = async (page) => {
   const { params } = page;
@@ -18,6 +19,13 @@ export const load: PageServerLoad = async (page) => {
       },
       attended: true,
     },
+    include: {
+      user: {
+        select: {
+          name: true,
+        },
+      },
+    },
   });
 
   return {
@@ -26,18 +34,25 @@ export const load: PageServerLoad = async (page) => {
 };
 
 export const actions: Actions = {
-  createAttendance: async ({ request }) => {
+  createAttendance: async ({ request, locals }) => {
     const { name, date, attended } = Object.fromEntries(
       await request.formData()
     ) as unknown as { name: string; date: Date; attended: string };
-    let isAttended: boolean = attended ? true : false;
 
-    if (name === "") return fail(400, { message: "Name is required" });
+    const isAttended: boolean = attended ? true : false;
+    const user: User = locals.user;
+
+    if (!user) return fail(400, { message: "User not connected" });
+
 
     try {
       await prisma.attendance.create({
         data: {
-          name,
+          user: {
+            connect: {
+              id: user.id,
+            },
+          },
           date: new Date(date),
           attended: isAttended,
         },
