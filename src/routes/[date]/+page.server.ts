@@ -1,11 +1,15 @@
-import { fail, type Actions, type RequestHandler } from "@sveltejs/kit";
+import { fail, redirect, type Actions, type RequestHandler } from "@sveltejs/kit";
 import { prisma } from "$lib/server/prisma";
 import type { PageServerLoad } from "./$types";
 import type { User } from "@prisma/client";
 
-export const load: PageServerLoad = async (page) => {
-  const { params } = page;
+export const load: PageServerLoad = async ({ params, locals }) => {
   const { date } = params;
+  const { user } = locals;
+
+  if (!user) {
+    throw redirect(302, "/login");
+  }
 
   const startOfDay = new Date(date);
   const endOfDay = new Date(date);
@@ -28,8 +32,22 @@ export const load: PageServerLoad = async (page) => {
     },
   });
 
+  const todayUserAttendance = await prisma.attendance.findFirst({
+    where: {
+      date: {
+        gte: startOfDay,
+        lt: endOfDay,
+      },
+      userId: user.id,
+    },
+  });
+
+  
+
   return {
     attendances,
+    user,
+    todayUserAttendance,
   };
 };
 
@@ -43,7 +61,6 @@ export const actions: Actions = {
     const user: User = locals.user;
 
     if (!user) return fail(400, { message: "User not connected" });
-
 
     try {
       await prisma.attendance.create({
