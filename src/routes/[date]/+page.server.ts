@@ -59,7 +59,7 @@ export const actions: Actions = {
     ) as unknown as { date: Date; attended: string };
 
     const isAttended: boolean = attended ? true : false;
-    const user: User = locals.user;
+    const user: User = locals.user as User;
 
     if (!user) return fail(400, { message: "User not connected" });
 

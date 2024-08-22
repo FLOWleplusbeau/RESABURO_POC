@@ -38,6 +38,7 @@
 <div class="app">
     <header>
         <input type="date" bind:value={dateString}>
+
         <!-- temporary buttons -->
         <button on:click={logOut}>Log out</button>
         <button on:click={deleteAttendances}>delete attendance</button> 
