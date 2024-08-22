@@ -13,6 +13,7 @@ export const actions: Actions = {
     const { name, email, password } = Object.fromEntries(
       await request.formData()
     ) as unknown as { name: string; email: string; password: string };
+
     if (name === "") return fail(400, { message: "Name is required" });
     if (email === "") return fail(400, { message: "Email is required" });
 

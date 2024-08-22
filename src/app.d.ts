@@ -5,16 +5,16 @@ import type { PrismaClient } from "@prisma/client/extension";
 
 // for information about these interfaces
 declare global {
-	namespace App {
-		// interface Error {}
-		interface Locals {
-			user: User | null | string;
-		}
-		// interface PageData {}
-		// interface PageState {}
-		// interface Platform {}
-	}
-	var prisma: PrismaClient;
+  namespace App {
+    // interface Error {}
+    interface Locals {
+      user: User | null | string;
+    }
+    // interface PageData {}
+    // interface PageState {}
+    // interface Platform {}
+  }
+  var prisma: PrismaClient;
 }
 
 export {};
