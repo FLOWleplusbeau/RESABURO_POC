@@ -4,6 +4,18 @@
     // export let user: User;
     export let todayUserAttendance: Attendance;
     export let dateString: string;
+
+    function deleteAttendance(id: string | undefined) {
+        if (!id) return;
+        fetch(`/api/deleteAttendance/${id}`, {
+            method: "DELETE",
+        })
+        .then((res) =>
+            res.ok
+                ? location.reload()
+                : console.error("Failed to delete attendance")
+        )
+    }
 </script>
 
 <div class="container">
@@ -14,7 +26,7 @@
         {:else}
             <p>You are not at office today</p>
         {/if}
-        <button>Modify</button>
+        <button on:click={() => deleteAttendance(todayUserAttendance.id)}>Modify</button>
     {:else}
         <form action="?/createAttendance" method="post">
             {dateString}

@@ -4,6 +4,7 @@
     import { browser } from '$app/environment';
     import { goto } from '$app/navigation';
     import { page } from '$app/stores';
+    
 
     let dateString: string = $page.params.date;
 
@@ -22,11 +23,21 @@
             location.reload();
         }, 500);
     }
+
+    function logOut() {
+        fetch('api/logout', { method: 'DELETE' })
+            .then(response => {
+                if (response.ok) goto('/login');
+                else console.error('Failed to log out');
+            })
+            .catch(error => console.error('Network error:', error));
+    }
 </script>
   
 <div class="app">
     <header>
         <input type="date" bind:value={dateString}>
+        <button on:click={logOut}>Log out</button>
         <button on:click={deleteAttendances}>delete attendance</button>
     </header>
     <div class="wrapper">

@@ -23,20 +23,6 @@
 
 <div class="wrapper1">
     <AttendanceBooker {todayUserAttendance} {dateString} />
-    <!-- {#if todayUserAttendance}
-        <p>You already booked for today</p>
-    {:else}
-        <form action="?/createAttendance" method="post">
-            {formatDateToString(date)}
-            <label class="invisible">
-                <input name="date" type="date" value={dateString}/>
-            </label>
-            <label>
-                <input name="attended" type="radio"> At office
-            </label>
-            <button type="submit">Submit</button>
-        </form>
-    {/if} -->
 </div>
 
 <div class="wrapper2">
