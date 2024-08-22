@@ -61,15 +61,18 @@
         margin-top: 20px;
         padding: 10px;
         border-radius: 10px;
+        box-sizing: border-box;
         background-color: var(--accent-color);
         color: white;
         font-size: 1.2rem;
         cursor: pointer;
+        border: transparent 2px solid;
     }
 
     button:hover {
         background-color: var(--accent-color-hover);
         color: black;
+        border: black 2px solid;
     }
 
     
