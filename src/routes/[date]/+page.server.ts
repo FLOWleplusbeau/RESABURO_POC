@@ -1,4 +1,4 @@
-import { fail, redirect, type Actions, type RequestHandler } from "@sveltejs/kit";
+import { fail, redirect, type Actions } from "@sveltejs/kit";
 import { prisma } from "$lib/server/prisma";
 import type { PageServerLoad } from "./$types";
 import type { User } from "@prisma/client";
@@ -7,6 +7,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
   const { date } = params;
   const { user } = locals;
 
+  // redirect to login if user is not connected
   if (!user) {
     throw redirect(302, "/login");
   }
@@ -15,6 +16,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
   const endOfDay = new Date(date);
   endOfDay.setDate(startOfDay.getDate() + 1);
 
+  // get all attendances and their user for the day
   const attendances = await prisma.attendance.findMany({
     where: {
       date: {
@@ -32,6 +34,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
     },
   });
 
+  // get the user attendance for the day
   const todayUserAttendance = await prisma.attendance.findFirst({
     where: {
       date: {
@@ -42,8 +45,6 @@ export const load: PageServerLoad = async ({ params, locals }) => {
     },
   });
 
-  
-
   return {
     attendances,
     user,
@@ -53,9 +54,9 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 
 export const actions: Actions = {
   createAttendance: async ({ request, locals }) => {
-    const { name, date, attended } = Object.fromEntries(
+    const { date, attended } = Object.fromEntries(
       await request.formData()
-    ) as unknown as { name: string; date: Date; attended: string };
+    ) as unknown as { date: Date; attended: string };
 
     const isAttended: boolean = attended ? true : false;
     const user: User = locals.user;
@@ -63,6 +64,7 @@ export const actions: Actions = {
     if (!user) return fail(400, { message: "User not connected" });
 
     try {
+      // create attendance
       await prisma.attendance.create({
         data: {
           user: {

@@ -11,6 +11,7 @@
     $: currentDate.set(dateString);
     $: if (browser && dateString) goto(`/${dateString}`);
 
+    // temporary function to delete all attendances
     function deleteAttendances() {
         fetch('api/deleteAttendance/all', { method: 'DELETE' })
             .then(response => {
@@ -37,8 +38,9 @@
 <div class="app">
     <header>
         <input type="date" bind:value={dateString}>
+        <!-- temporary buttons -->
         <button on:click={logOut}>Log out</button>
-        <button on:click={deleteAttendances}>delete attendance</button>
+        <button on:click={deleteAttendances}>delete attendance</button> 
     </header>
     <div class="wrapper">
         <slot></slot>

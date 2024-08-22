@@ -4,15 +4,15 @@
     import { currentDate } from "$lib/stores/sharedStore";
     import AttendancesDisplay from "$lib/components/attendancesDisplay.svelte";
     import AttendanceBooker from "$lib/components/attendanceBooker.svelte";
-    import type { User, Attendance} from "@prisma/client";
+    import type { Attendance} from "@prisma/client";
 
     export let data: PageData;
     let date: Date = new Date();
     let dateString: string = formatDateToString(date);
 
-    let user: User;
     let todayUserAttendance: Attendance;
 
+    // Destructure data
     $: ({ attendances, user, todayUserAttendance} = data);
 
     currentDate.subscribe(value => {
