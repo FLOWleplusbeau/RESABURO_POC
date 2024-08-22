@@ -2,52 +2,48 @@ import { fail, type Actions } from "@sveltejs/kit";
 import { prisma } from "$lib/server/prisma";
 import { hashPassword, createJwtToken } from "$lib/server/auth";
 import type { PageServerLoad } from "./$types";
+import { setAuthCookie } from "$lib/utils/cookies";
 
-export const load: PageServerLoad = async ({locals}) => {
-    console.log(locals.user);
+export const load: PageServerLoad = async ({ locals }) => {
+  console.log(locals.user);
 };
 
 export const actions: Actions = {
-    register: async ({request, cookies}) => {
-        const { name, email, password } = Object.fromEntries(await request.formData()) as unknown as { name : string, email: string, password: string };
-        if (name === "")
-            return fail(400, { message: "Name is required" });
-        if (email === "")
-            return fail(400, { message: "Email is required" });
+  register: async ({ request, cookies }) => {
+    const { name, email, password } = Object.fromEntries(
+      await request.formData()
+    ) as unknown as { name: string; email: string; password: string };
+    if (name === "") return fail(400, { message: "Name is required" });
+    if (email === "") return fail(400, { message: "Email is required" });
 
-        try {
-            const existingUser = await prisma.user.findUnique({ where: { email } });
-            if (existingUser) {
-              return fail(400, { error: 'User already exists' });
-            }
+    try {
+      const existingUser = await prisma.user.findUnique({ where: { email } });
+      if (existingUser) {
+        return fail(400, { error: "User already exists" });
+      }
 
-            const hashedPassword = await hashPassword(password);
+      const hashedPassword = await hashPassword(password);
 
-            const user = await prisma.user.create({
-              data: {
-                  name: name,
-                  email,
-                  password: hashedPassword,
-              },
-          });
-        
-            const token = createJwtToken({ id: user.id });
-        
-            cookies.set('auth', token, {
-                path: '/',
-                httpOnly: true,
-                sameSite: "strict",
-                maxAge: 60 * 60 * 24 * 7,
-            });
+      const user = await prisma.user.create({
+        data: {
+          name: name,
+          email,
+          password: hashedPassword,
+        },
+      });
 
-            return {
-                status: 201,
-                body: {
-                    message: "Register Successfull",
-                },
-            };
-          } catch (error) {
-            return fail(500, { error: 'Failed Register' });
-          }
-    },
+      const token = createJwtToken({ id: user.id });
+
+      setAuthCookie(cookies, token);
+
+      return {
+        status: 201,
+        body: {
+          message: "Register Successfull",
+        },
+      };
+    } catch (error) {
+      return fail(500, { error: "Failed Register" });
+    }
+  },
 };
