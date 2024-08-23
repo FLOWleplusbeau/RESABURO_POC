@@ -37,10 +37,9 @@
   
 <div class="app">
     <header>
-        <input type="date" bind:value={dateString}>
-
         <!-- temporary buttons -->
         <button on:click={logOut}>Log out</button>
+        <input type="date" bind:value={dateString}>
         <button on:click={deleteAttendances}>delete attendance</button> 
     </header>
     <div class="wrapper">
@@ -56,11 +55,12 @@
 
     .wrapper {
         height: 90vh;
+        width: 100%;
         gap: 20px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: space-evenly;
+        justify-content: center;
         padding: 20px;
     }
 
@@ -72,6 +72,16 @@
         height: 10vh;
         padding-left: 100px;
         padding-right: 100px;
+    }
+
+    button {
+        background-color: var(--primary-color);
+        color: var(--accent-color);
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100px;
     }
 </style>
 
