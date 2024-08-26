@@ -1,11 +1,11 @@
 <script>
-    import { onMount } from "svelte";
-    import { formatDateToString } from "$lib/utils/date";
-    import { goto } from "$app/navigation";
+  import { onMount } from "svelte";
+  import { formatDateToString } from "$lib/utils/date";
+  import { goto } from "$app/navigation";
 
-    onMount(() => {
-        let date = formatDateToString(new Date());
+  onMount(() => {
+    let date = formatDateToString(new Date());
 
-        goto(`/app/${date}`);
-    });
+    goto(`/app/${date}`);
+  });
 </script>

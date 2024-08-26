@@ -16,4 +16,3 @@ export const DELETE: RequestHandler = async (request) => {
     status: 200,
   });
 };
-
