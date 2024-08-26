@@ -1,12 +1,19 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import type { LatLngBounds } from 'leaflet';
+    import type { LatLngBounds, rectangle } from 'leaflet';
 	import type { Desk } from '$lib/utils/desk';
     import plan from '$lib/plan.png';
 
+	export let selectedDesk: Desk | null = null;
+
     let map: L.Map;
-	let desks: [
-		{x: 0, y: 0, width: 1, height: 1},
+
+	let desks: Desk[] = [
+		{x: 1, y: 1, width: 1, height: 1, rect: null},
+		{x: 2, y: 2, width: 1, height: 1, rect: null},
+		{x: 3, y: 3, width: 1, height: 1, rect: null},
+		{x: 4, y: 4, width: 1, height: 1, rect: null},
+		{x: 5, y: 5, width: 1, height: 1, rect: null},
 	]
 
     onMount(async () => {
@@ -32,15 +39,26 @@
         // Set the view to the bounds
         map.fitBounds(mapBounds);
 
-        // Define rectangle geographical bounds
-        const bounds1: LatLngBounds = L.latLngBounds([[0, 0], [1, 1]]);
-        const bounds2: LatLngBounds = L.latLngBounds([[1, 0], [2, 1.5]]);
+        desks.forEach(desk => {
+			const bounds: LatLngBounds = L.latLngBounds([[desk.x, desk.y], [desk.x + desk.width, desk.y + desk.height]]);
+			desk.rect = L.rectangle(bounds, { color: "#FF0000", weight: 1 }).addTo(map);
+			desk.rect.on('click', () => {
+				handleDeskClick(desk);
+			});
+		});
 
-        // Create rectangles
-        L.rectangle(bounds1, { color: "#FF0000", weight: 1 }).addTo(map);
-        L.rectangle(bounds2, { color: "#FF0000", weight: 1 }).addTo(map);
+		let lastDesk: Desk | null = null;
+
+		function handleDeskClick(desk: Desk) {
+			if (lastDesk)
+				if (lastDesk.rect) lastDesk.rect.setStyle({ color: "#FF0000", weight: 1 });
+			if (desk.rect)
+				desk.rect.setStyle({ color: "#00FF00", weight: 2 });
+			lastDesk = desk;
+			selectedDesk = desk;
+		}
+
     });
-
 </script>
 
 <style>
