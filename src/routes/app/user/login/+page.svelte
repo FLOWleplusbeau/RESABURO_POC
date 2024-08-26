@@ -24,12 +24,10 @@
   
   <form class="main-form" on:submit={handleSubmit}>
     <label>
-      Email:
-      <input name="email" type="email" required />
+      <input name="email" type="email" required placeholder="your@email.com"/>
     </label>
     <label>
-      Password:
-      <input name="password" type="password" required />
+      <input name="password" type="password" required placeholder="Password"/>
     </label>
     <button type="submit">Login</button>
   </form>

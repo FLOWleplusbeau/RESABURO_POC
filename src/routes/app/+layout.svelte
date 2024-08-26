@@ -1,5 +1,17 @@
 <script>
-    import "$lib/global.css"
+    import "$lib/style/global.css"
 </script>
 
-<slot></slot>
+<div class="wrapper">
+    <slot></slot>
+</div>
+
+<style>
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+</style>

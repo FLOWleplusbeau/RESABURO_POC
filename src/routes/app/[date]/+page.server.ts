@@ -9,7 +9,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 
   // redirect to login if user is not connected
   if (!user) {
-    throw redirect(302, "/login");
+    throw redirect(302, "/app/user/login");
   }
 
   const startOfDay = new Date(date);

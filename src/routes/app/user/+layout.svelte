@@ -1,4 +1,8 @@
 
+<script>
+    import "$lib/style/form.css"
+</script>
+
 <div class="wrapper">
     <slot></slot>
 </div>
