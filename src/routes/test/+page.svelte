@@ -1,12 +1,12 @@
 <script lang="ts">
-    import DeskMap from "$lib/components/deskMap.svelte";
+    import DeskSelecor from "$lib/components/deskSelector.svelte";
     import type { Desk } from "$lib/utils/desk";
 
     let selectedDesk: Desk | null = null;
 </script>
 
 <div class="wrapper">
-    <DeskMap bind:selectedDesk />
+    <DeskSelecor bind:selectedDesk />
 </div>
 <div class="wrapper2">
     {#if selectedDesk}
