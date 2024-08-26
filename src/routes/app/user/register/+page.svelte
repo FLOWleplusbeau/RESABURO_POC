@@ -12,7 +12,7 @@
       });
   
       if (response.ok) {
-        goto('/'); // Redirect to the success page
+        goto('/app'); // Redirect to the success page
       } else {
         const result = await response.json();
         console.error(result.error);
@@ -20,26 +20,15 @@
     }
   </script>
   
-  <form on:submit={handleSubmit}>
+  <form class="main-form" on:submit={handleSubmit}>
       <label>
-          Name:
-          <input name="name" type="text" required />
+          <input name="name" type="text" required placeholder="Your Name"/>
       </label>
       <label>
-          Email:
-          <input name="email" type="email" required />
+          <input name="email" type="email" required placeholder="your@email.com"/>
       </label>
       <label>
-          Password:
-          <input name="password" type="password" required />
+          <input name="password" type="password" required placeholder="Password" />
       </label>
       <button type="submit">Register</button>
   </form>
-  
-  <style>
-      form {
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-      }
-  </style>

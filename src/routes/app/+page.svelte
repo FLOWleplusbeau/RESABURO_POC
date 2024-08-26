@@ -9,3 +9,5 @@
         goto(`/app/${date}`);
     });
 </script>
+
+<p>Redirecting</p>

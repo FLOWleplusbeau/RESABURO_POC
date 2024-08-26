@@ -13,8 +13,8 @@
       });
   
       if (response.ok) {
-        await invalidate('/'); // Invalidate the root page to refresh data
-        goto('/'); // Redirect to the home page
+        await invalidate('/app'); // Invalidate the root page to refresh data
+        goto('/app'); // Redirect to the home page
       } else {
         const result = await response.json();
         console.error(result.error);
@@ -22,7 +22,7 @@
     }
   </script>
   
-  <form on:submit={handleSubmit}>
+  <form class="main-form" on:submit={handleSubmit}>
     <label>
       Email:
       <input name="email" type="email" required />
@@ -33,11 +33,3 @@
     </label>
     <button type="submit">Login</button>
   </form>
-  
-  <style>
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-  </style>

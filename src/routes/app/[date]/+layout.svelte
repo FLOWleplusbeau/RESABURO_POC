@@ -9,7 +9,7 @@
     let dateString: string = $page.params.date;
 
     $: currentDate.set(dateString);
-    $: if (browser && dateString) goto(`/${dateString}`);
+    $: if (browser && dateString) goto(`/app/${dateString}`);
 
     // temporary function to delete all attendances
     function deleteAttendances() {
@@ -26,9 +26,9 @@
     }
 
     function logOut() {
-        fetch('api/logout', { method: 'DELETE' })
+        fetch('/api/logout', { method: 'DELETE' })
             .then(response => {
-                if (response.ok) goto('/login');
+                if (response.ok) goto('/app/user/login');
                 else console.error('Failed to log out');
             })
             .catch(error => console.error('Network error:', error));

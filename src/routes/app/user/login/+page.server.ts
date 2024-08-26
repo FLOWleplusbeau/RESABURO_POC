@@ -1,7 +1,6 @@
 import { fail, redirect, type Actions } from "@sveltejs/kit";
 import { prisma } from "$lib/server/prisma";
 import { comparePasswords, createJwtToken } from "$lib/server/auth";
-import type { PageServerLoad } from "./$types";
 import { setAuthCookie } from "$lib/utils/cookies";
 
 export const actions: Actions = {
