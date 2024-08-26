@@ -6,6 +6,8 @@ import { setAuthCookie } from "$lib/utils/cookies";
 
 export const actions: Actions = {
   login: async ({ request, cookies }) => {
+    
+    // get the email and password from the form
     const { email, password } = Object.fromEntries(
       await request.formData()
     ) as unknown as { email: string; password: string };
