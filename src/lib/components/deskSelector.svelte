@@ -2,7 +2,7 @@
   import { browser } from '$app/environment';
   import type { LatLngBounds, rectangle } from "leaflet";
   import type { Desk_t } from "$lib/utils/desk";
-  import plan from "$lib/plan.png";
+  import plan from "$lib/images/plan.png";
   import "leaflet/dist/leaflet.css";
   import type { Desk } from '@prisma/client';
   import { createDesk } from '$lib/utils/desk';
