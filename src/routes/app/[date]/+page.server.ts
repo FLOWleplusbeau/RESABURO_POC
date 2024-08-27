@@ -54,12 +54,13 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 
 export const actions: Actions = {
   createAttendance: async ({ request, locals }) => {
-    const { date, attended } = Object.fromEntries(
+    const { date, attended, deskIdString } = Object.fromEntries(
       await request.formData()
-    ) as unknown as { date: Date; attended: string };
+    ) as unknown as { date: Date; attended: string, deskIdString: string };
 
     const isAttended: boolean = attended ? true : false;
     const user: User = locals.user as User;
+    const deskId: number = parseInt(deskIdString);
 
     if (!user) return fail(400, { message: "User not connected" });
 
@@ -70,6 +71,11 @@ export const actions: Actions = {
           user: {
             connect: {
               id: user.id,
+            },
+          },
+          desk: {
+            connect: {
+              id: deskId,
             },
           },
           date: new Date(date),

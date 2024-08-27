@@ -33,10 +33,13 @@
     <form action="?/createAttendance" method="post">
       {dateString}
       <label class="invisible">
-        <input name="date" type="date" value={dateString} />
+        <input name="date" type="date" value={dateString} required/>
       </label>
       <label>
-        <input name="attended" type="radio" /> At office
+        <input name="attended" type="radio" required/> At office
+      </label>
+      <label class="">
+        <input name="deskIdString" type="number" value={selectedDesk?.id} required/>
       </label>
       {#if selectedDesk}
         <p>Selected Desk: {selectedDesk.id}</p>
