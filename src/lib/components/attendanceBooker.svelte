@@ -1,9 +1,13 @@
 <script lang="ts">
   import type { Attendance, User } from "@prisma/client";
+  import DeskSelector from "$lib/components/deskSelector.svelte";
+  import type { Desk } from "$lib/utils/desk";
 
   // export let user: User;
   export let todayUserAttendance: Attendance;
   export let dateString: string;
+  export let selectedDesk: Desk | null = null;
+  export let selectingDesk: boolean = false;
 
   function deleteAttendance(id: string | undefined) {
     if (!id) return;
@@ -35,8 +39,14 @@
       <label>
         <input name="attended" type="radio" /> At office
       </label>
+      {#if selectedDesk}
+        <p>Selected Desk: {selectedDesk?.x}</p>
+      {:else}
+        <p>No desk selected</p>
+      {/if}
       <button type="submit">Submit</button>
     </form>
+    <button on:click={() => selectingDesk = true}>Select desk</button>
   {/if}
 </div>
 
@@ -65,6 +75,7 @@
     justify-content: space-around;
     align-items: center;
     height: 100%;
+    width: 100%;
     background-color: var(--primary-color);
   }
 
@@ -88,5 +99,10 @@
 
   .invisible {
     display: none;
+  }
+
+  .map {
+    width: 200px;
+    height: 200px;
   }
 </style>
