@@ -1,41 +1,72 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { browser } from '$app/environment';
   import type { LatLngBounds, rectangle } from "leaflet";
   import type { Desk } from "$lib/utils/desk";
   import plan from "$lib/plan.png";
+  import "leaflet/dist/leaflet.css";
 
   export let selectedDesk: Desk | null = null;
 
+  let L: any;
+  let promise: any;
   let map: L.Map;
 
-  let desks: Desk[] = [
-    { x: 1, y: 1, width: 1, height: 1, rect: null },
-    { x: 2, y: 2, width: 1, height: 1, rect: null },
-    { x: 3, y: 3, width: 1, height: 1, rect: null },
-    { x: 4, y: 4, width: 1, height: 1, rect: null },
-    { x: 5, y: 5, width: 1, height: 1, rect: null },
-  ];
+  if (browser) {
+        import("leaflet").then((leaflet) => {
+            L = leaflet;
+            initialize();
+        });
+    }
 
-  onMount(async () => {
-    const L = await import("leaflet"); // Dynamically import Leaflet
-    const { CRS } = L;
+  async function initialize() {
+    const desks = await getAllDesks();
+      loadMap(desks);
+  }
 
-    const mapBounds: LatLngBounds = L.latLngBounds([
-      [0, 0],
-      [10, 20],
-    ]);
+  async function getAllDesks(): Promise<Desk[]> {
+    let desks: Desk[] = [];
 
-    // Initialize the map with CRS.Simple
-    map = L.map("map", {
-      crs: CRS.Simple,
-      minZoom: 3,
-      maxZoom: 8,
-      center: [0, 0],
-      maxBounds: mapBounds,
-      maxBoundsViscosity: 0.0,
-      zoom: 5,
-      attributionControl: false,
-    });
+    try {
+      const res = await fetch("/api/desk/all");
+
+      if (!res.ok) return desks;
+
+      const unformatedDesks = await res.json();
+
+      unformatedDesks.forEach((unDesk: any) => {
+        let desk: Desk = {
+          x: unDesk.x,
+          y: unDesk.y,
+          width: unDesk.width,
+          height: unDesk.height,
+          rect: null,
+        };
+        desks.push(desk);
+      });
+      return desks;
+    } catch (error) {
+      console.error(error);
+      return desks;
+    }
+  }
+
+  async function loadMap(desks: Desk[]) {
+  const { CRS } = L;
+  const mapBounds: LatLngBounds = L.latLngBounds([
+    [0, 0],
+    [10, 20],
+  ]);
+
+  // Initialize the map with CRS.Simple
+  map = L.map("map", {
+    crs: CRS.Simple,
+    minZoom: 3,
+    maxZoom: 8,
+    center: [0, 0],
+    maxBounds: mapBounds,
+    maxBoundsViscosity: 0.0,
+    zoom: 5,
+  });
 
     // Add the image overlay
     L.imageOverlay(plan, mapBounds).addTo(map);
@@ -51,9 +82,11 @@
       desk.rect = L.rectangle(bounds, { color: "#FF0000", weight: 1 }).addTo(
         map
       );
-      desk.rect.on("click", () => {
-        handleDeskClick(desk);
-      });
+      if (desk.rect) {
+        desk.rect.on("click", () => {
+          handleDeskClick(desk);
+        });
+      }
     });
 
     let lastDesk: Desk | null = null;
@@ -66,11 +99,11 @@
       lastDesk = desk;
       selectedDesk = desk;
     }
-  });
+  }
 </script>
 
 <div id="map"></div>
-
+  
 <style>
   #map {
     width: 100%;
