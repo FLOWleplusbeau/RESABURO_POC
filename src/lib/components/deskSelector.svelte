@@ -35,6 +35,7 @@
 
       unformatedDesks.forEach((unDesk: any) => {
         let desk: Desk = {
+          id: unDesk.id,
           x: unDesk.x,
           y: unDesk.y,
           width: unDesk.width,

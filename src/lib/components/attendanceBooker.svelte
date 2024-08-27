@@ -39,7 +39,7 @@
         <input name="attended" type="radio" /> At office
       </label>
       {#if selectedDesk}
-        <p>Selected Desk: {selectedDesk?.x}</p>
+        <p>Selected Desk: {selectedDesk.id}</p>
       {:else}
         <p>No desk selected</p>
       {/if}
