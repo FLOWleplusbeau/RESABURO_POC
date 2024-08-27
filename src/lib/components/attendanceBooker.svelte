@@ -53,14 +53,13 @@
   .container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
+    justify-content: space-between;
     padding: 10px;
+    align-items: center;
     border-radius: 30px;
     width: 100%;
     height: 100%;
-    max-height: 50vh;
+    overflow: hidden;
     background-color: var(--primary-color);
   }
 
@@ -73,13 +72,12 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    height: 100%;
+    gap: 5px;
     width: 100%;
     background-color: var(--primary-color);
   }
 
   button {
-    margin-top: 20px;
     padding: 10px;
     border-radius: 10px;
     box-sizing: border-box;
