@@ -31,9 +31,9 @@ model User {
 
 model Desk {
   id          Int         @id @default(autoincrement())
-  x           Int
-  y           Int
-  width       Int
-  height      Int
+  x           Float       @default(0)
+  y           Float       @default(0)
+  width       Float       @default(1)
+  height      Float       @default(1)
   attendances Attendance[]
 }

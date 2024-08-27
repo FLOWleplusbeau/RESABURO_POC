@@ -23,6 +23,7 @@
     dateString = value;
     date = formatDateStringToDate(value);
     selectedDesk = null;
+    selectingDesk = false;
   });
 </script>
 

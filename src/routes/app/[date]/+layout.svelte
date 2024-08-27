@@ -11,7 +11,7 @@
 
   // temporary function to delete all attendances
   function deleteAttendances() {
-    fetch("api/deleteAttendance/all", { method: "DELETE" })
+    fetch("/api/deleteAttendance/all", { method: "DELETE" })
       .then((response) => {
         if (response.ok) console.log("Attendances deleted successfully");
         else console.error("Failed to delete attendances");
@@ -24,7 +24,7 @@
   }
 
   function logOut() {
-    fetch("/api/logout", { method: "DELETE" })
+    fetch("/api/user/logout", { method: "DELETE" })
       .then((response) => {
         if (response.ok) goto("/app/user/login");
         else console.error("Failed to log out");
