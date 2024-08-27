@@ -20,15 +20,18 @@
 
 <div class="container">
   {#if todayUserAttendance}
-    <h2>You already booked for today</h2>
-    {#if todayUserAttendance.attended}
-      <p>You are at office today</p>
-    {:else}
-      <p>You are not at office today</p>
-    {/if}
-    <button on:click={() => deleteAttendance(todayUserAttendance.id)}
-      >Modify</button
-    >
+    <div class="message">
+      <h2>You already booked for today</h2>
+      {#if todayUserAttendance.attended}
+        <p>You are at office today</p>
+        <p>Desk {todayUserAttendance.deskId}</p>
+      {:else}
+        <p>You are not at office today</p>
+      {/if}
+      <button on:click={() => deleteAttendance(todayUserAttendance.id)}
+        >Modify</button
+      >
+    </div>
   {:else}
     <form action="?/createAttendance" method="post">
       {dateString}
@@ -38,7 +41,7 @@
       <label>
         <input name="attended" type="radio" required/> At office
       </label>
-      <label class="">
+      <label class="invisible">
         <input name="deskIdString" type="number" value={selectedDesk?.id} required/>
       </label>
       {#if selectedDesk}
@@ -95,6 +98,18 @@
     background-color: var(--accent-color-hover);
     color: black;
     border: black 2px solid;
+  }
+
+  .message {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    background-color: var(--primary-color);
+    margin-top: auto;
+    margin-bottom: auto;
   }
 
   .invisible {
