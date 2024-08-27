@@ -31,4 +31,5 @@
     <input name="password" type="password" required placeholder="Password" />
   </label>
   <button type="submit">Register</button>
+  <p>Already have an account<a href="/app/user/login">Login</a> </p>
 </form>
