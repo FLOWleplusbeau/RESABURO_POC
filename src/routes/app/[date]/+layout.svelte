@@ -24,7 +24,7 @@
   }
 
   function logOut() {
-    fetch("/api/user/logout", { method: "DELETE" })
+    fetch("/api/logout", { method: "DELETE" })
       .then((response) => {
         if (response.ok) goto("/app/user/login");
         else console.error("Failed to log out");
