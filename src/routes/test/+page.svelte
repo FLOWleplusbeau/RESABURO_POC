@@ -1,8 +1,8 @@
 <script lang="ts">
     import DeskSelecor from "$lib/components/deskSelector.svelte";
-    import type { Desk } from "$lib/utils/desk";
+    import type { Desk_t } from "$lib/utils/desk";
 
-    let selectedDesk: Desk | null = null;
+    let selectedDesk: Desk_t | null = null;
 </script>
 
 <div class="wrapper">

@@ -4,7 +4,7 @@
   export let attendances: (Attendance & { user: User })[] = [];
 
   function deleteAttendance(attendance: Attendance) {
-    fetch(`api/deleteAttendance/${attendance.id}`, { method: "DELETE" })
+    fetch(`/api/deleteAttendance/${attendance.id}`, { method: "DELETE" })
       .then((response) => {
         if (response.ok)
           attendances = attendances.filter((a) => a.id !== attendance.id);

@@ -1,11 +1,11 @@
 <script lang="ts">
   import type { Attendance, User } from "@prisma/client";
-  import type { Desk } from "$lib/utils/desk";
+  import type { Desk_t } from "$lib/utils/desk";
 
   // export let user: User;
   export let todayUserAttendance: Attendance;
   export let dateString: string;
-  export let selectedDesk: Desk | null = null;
+  export let selectedDesk: Desk_t | null = null;
   export let selectingDesk: boolean = false;
 
   function deleteAttendance(id: string | undefined) {

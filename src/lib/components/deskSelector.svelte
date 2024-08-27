@@ -1,11 +1,13 @@
 <script lang="ts">
   import { browser } from '$app/environment';
   import type { LatLngBounds, rectangle } from "leaflet";
-  import type { Desk } from "$lib/utils/desk";
+  import type { Desk_t } from "$lib/utils/desk";
   import plan from "$lib/plan.png";
   import "leaflet/dist/leaflet.css";
+  import type { Desk } from '@prisma/client';
+  import { createDesk } from '$lib/utils/desk';
 
-  export let selectedDesk: Desk | null = null;
+  export let selectedDesk: Desk_t | null = null;
 
   let L: any;
   let promise: any;
@@ -23,8 +25,8 @@
       loadMap(desks);
   }
 
-  async function getAllDesks(): Promise<Desk[]> {
-    let desks: Desk[] = [];
+  async function getAllDesks(): Promise<Desk_t[]> {
+    let desks: Desk_t[] = [];
 
     try {
       const res = await fetch("/api/desk/all");
@@ -33,15 +35,8 @@
 
       const unformatedDesks = await res.json();
 
-      unformatedDesks.forEach((unDesk: any) => {
-        let desk: Desk = {
-          id: unDesk.id,
-          x: unDesk.x,
-          y: unDesk.y,
-          width: unDesk.width,
-          height: unDesk.height,
-          rect: null,
-        };
+      unformatedDesks.forEach((unDesk: Desk) => {
+      const desk = createDesk(unDesk);
         desks.push(desk);
       });
       return desks;
@@ -51,7 +46,7 @@
     }
   }
 
-  async function loadMap(desks: Desk[]) {
+  async function loadMap(desks: Desk_t[]) {
   const { CRS } = L;
   const mapBounds: LatLngBounds = L.latLngBounds([
     [0, 0],
@@ -90,9 +85,9 @@
       }
     });
 
-    let lastDesk: Desk | null = null;
+    let lastDesk: Desk_t | null = null;
 
-    function handleDeskClick(desk: Desk) {
+    function handleDeskClick(desk: Desk_t) {
       if (lastDesk)
         if (lastDesk.rect)
           lastDesk.rect.setStyle({ color: "#FF0000", weight: 1 });
