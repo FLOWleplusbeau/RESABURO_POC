@@ -24,7 +24,8 @@
     {/if}
     {#each attendances as attendance}
       <div class="attendance">
-        {attendance.user.name}
+        <p>{attendance.user.name}</p>
+          <p>Desk {attendance.deskId}</p>
         <button on:click={() => deleteAttendance(attendance)}>delete</button>
       </div>
     {/each}
