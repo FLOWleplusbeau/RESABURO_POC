@@ -12,8 +12,10 @@ datasource db {
 
 model Attendance {
   id        String     @id @default(cuid())
-  userId    String?    @default(cuid())
-  user      User?      @relation(fields: [userId], references: [id])
+  userId    String    
+  user      User       @relation(fields: [userId], references: [id])
+  deskId    Int?       
+  desk      Desk?      @relation(fields: [deskId], references: [id])
   date      DateTime   @default(now())
   attended  Boolean    @default(true)
 }
@@ -24,5 +26,14 @@ model User {
   email       String      @unique
   password    String
   role        String      @default("USER")
+  attendances Attendance[]
+}
+
+model Desk {
+  id          Int         @id @default(autoincrement())
+  x           Int
+  y           Int
+  width       Int
+  height      Int
   attendances Attendance[]
 }

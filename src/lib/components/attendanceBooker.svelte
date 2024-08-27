@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { Attendance, User } from "@prisma/client";
-  import DeskSelector from "$lib/components/deskSelector.svelte";
   import type { Desk } from "$lib/utils/desk";
 
   // export let user: User;
@@ -99,10 +98,5 @@
 
   .invisible {
     display: none;
-  }
-
-  .map {
-    width: 200px;
-    height: 200px;
   }
 </style>
