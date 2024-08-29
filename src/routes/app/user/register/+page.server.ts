@@ -1,12 +1,7 @@
 import { fail, redirect, type Actions } from "@sveltejs/kit";
 import { prisma } from "$lib/server/prisma";
 import { hashPassword, createJwtToken } from "$lib/server/auth";
-import type { PageServerLoad } from "./$types";
 import { setAuthCookie } from "$lib/utils/cookies";
-
-export const load: PageServerLoad = async ({ locals }) => {
-  console.log(locals.user);
-};
 
 export const actions: Actions = {
   register: async ({ request, cookies }) => {

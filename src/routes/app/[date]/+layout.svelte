@@ -9,20 +9,6 @@
   $: currentDate.set(dateString);
   $: if (browser && dateString) goto(`/app/${dateString}`);
 
-  // temporary function to delete all attendances
-  function deleteAttendances() {
-    fetch("/api/deleteAttendance/all", { method: "DELETE" })
-      .then((response) => {
-        if (response.ok) console.log("Attendances deleted successfully");
-        else console.error("Failed to delete attendances");
-      })
-      .catch((error) => console.error("Network error:", error));
-
-    setTimeout(() => {
-      location.reload();
-    }, 500);
-  }
-
   function logOut() {
     fetch("/api/logout", { method: "DELETE" })
       .then((response) => {
@@ -38,7 +24,6 @@
     <!-- temporary buttons -->
     <button on:click={logOut}>Log out</button>
     <input type="date" bind:value={dateString} />
-    <button on:click={deleteAttendances}>delete attendance</button>
   </header>
   <div class="wrapper">
     <slot></slot>
