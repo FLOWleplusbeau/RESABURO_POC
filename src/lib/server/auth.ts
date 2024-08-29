@@ -2,7 +2,6 @@ import bcrypt from "bcryptjs";
 import jwt, { type JwtPayload } from "jsonwebtoken";
 import dotenv from "dotenv";
 import type { RequestEvent } from "@sveltejs/kit";
-import { browser } from "$app/environment";
 
 dotenv.config();
 
@@ -56,7 +55,6 @@ export async function authentificateUser(event: RequestEvent) {
   if (!token) {
     return null;
   }
-
   try {
     const decryptedToken = decryptToken(token);
 

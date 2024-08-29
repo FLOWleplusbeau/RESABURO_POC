@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Attendance, User } from "@prisma/client";
+  import type { Attendance } from "@prisma/client";
   import type { Desk_t } from "$lib/utils/desk";
 
   // export let user: User;
