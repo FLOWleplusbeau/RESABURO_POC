@@ -6,6 +6,7 @@
   import "leaflet/dist/leaflet.css";
   import type { Desk } from '@prisma/client';
   import { createDesk } from '$lib/utils/desk';
+  import "$lib/styles/map.css";
 
   export let selectedDesk: Desk_t | null = null;
 
@@ -62,6 +63,7 @@
     maxBounds: mapBounds,
     maxBoundsViscosity: 0.0,
     zoom: 5,
+    attributionControl: false
   });
 
     // Add the image overlay
@@ -75,9 +77,12 @@
         [desk.x, desk.y],
         [desk.x + desk.width, desk.y + desk.height],
       ]);
-      desk.rect = L.rectangle(bounds, { color: "#FF0000", weight: 1 }).addTo(
-        map
-      );
+      desk.rect = L.rectangle(bounds, {
+        color: "#FF0000",
+        fillOpacity: 0.5,
+        weight: 1,
+        lineCap: "round",
+      }).addTo(map);
       if (desk.rect) {
         desk.rect.on("click", () => {
           handleDeskClick(desk);
@@ -100,10 +105,3 @@
 
 <div id="map"></div>
   
-<style>
-  #map {
-    width: 100%;
-    height: 100%;
-    user-select: none;
-  }
-</style>

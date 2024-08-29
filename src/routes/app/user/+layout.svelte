@@ -1,5 +1,5 @@
 <script>
-  import "$lib/style/form.css";
+  import "$lib/styles/form.css";
 </script>
 
 <div class="wrapper">

@@ -1,5 +1,5 @@
 <script>
-  import "$lib/style/global.css";
+  import "$lib/styles/global.css";
 </script>
 
 <div class="wrapper">
