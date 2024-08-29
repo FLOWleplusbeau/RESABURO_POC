@@ -17,6 +17,15 @@
       })
       .catch((error) => console.error("Network error:", error));
   }
+
+  function registerNewAccout() {
+    fetch("/api/logout", { method: "DELETE" })
+      .then((response) => {
+        if (response.ok) goto("/app/user/register");
+        else console.error("Failed to log out");
+      })
+      .catch((error) => console.error("Network error:", error));
+  }
 </script>
 
 <div class="app">
@@ -24,6 +33,7 @@
     <!-- temporary buttons -->
     <button on:click={logOut}>Log out</button>
     <input type="date" bind:value={dateString} />
+    <button on:click={registerNewAccout}>Register New Account</button>
   </header>
   <div class="wrapper">
     <slot></slot>
