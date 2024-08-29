@@ -1,6 +1,6 @@
 <script lang="ts">
   import { browser } from '$app/environment';
-  import type { LatLngBounds, rectangle } from "leaflet";
+  import type { LatLngBounds } from "leaflet";
   import type { Desk_t } from "$lib/utils/desk";
   import plan from "$lib/images/plan.png";
   import "leaflet/dist/leaflet.css";
@@ -54,7 +54,6 @@
     [10, 20],
   ]);
 
-  // Initialize the map with CRS.Simple
   map = L.map("map", {
     crs: CRS.Simple,
     minZoom: 3,
@@ -63,13 +62,11 @@
     maxBounds: mapBounds,
     maxBoundsViscosity: 0.0,
     zoom: 5,
-    attributionControl: false
+    attributionControl: false,
   });
 
-    // Add the image overlay
     L.imageOverlay(plan, mapBounds).addTo(map);
 
-    // Set the view to the bounds
     map.fitBounds(mapBounds);
 
     desks.forEach((desk) => {

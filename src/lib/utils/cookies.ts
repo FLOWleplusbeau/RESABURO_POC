@@ -12,5 +12,6 @@ export function setAuthCookie(
     httpOnly: true,
     sameSite: "strict",
     maxAge: maxAge,
+    secure: process.env.NODE_ENV === 'production', // Add secure flag for production
   });
 }
