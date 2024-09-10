@@ -1,3 +1,4 @@
+import { prisma } from '$lib/server/prisma';
 import bcrypt from "bcryptjs";
 import jwt, { type JwtPayload } from "jsonwebtoken";
 import dotenv from "dotenv";
@@ -57,7 +58,7 @@ export async function authentificateUser(event: RequestEvent) {
   }
   try {
     const decryptedToken = decryptToken(token);
-
+    console.log(decryptedToken);
     if (!decryptedToken) {
       return null;
     }
@@ -69,6 +70,7 @@ export async function authentificateUser(event: RequestEvent) {
     });
     return user;
   } catch (error) {
+    console.log(error);
     return null;
   }
 }
