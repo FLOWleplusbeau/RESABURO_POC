@@ -58,7 +58,6 @@ export async function authentificateUser(event: RequestEvent) {
   }
   try {
     const decryptedToken = decryptToken(token);
-    console.log(decryptedToken);
     if (!decryptedToken) {
       return null;
     }

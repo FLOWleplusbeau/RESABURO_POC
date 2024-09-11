@@ -66,22 +66,36 @@ export const actions: Actions = {
 
     try {
       // create attendance
-      await prisma.attendance.create({
-        data: {
-          user: {
-            connect: {
-              id: user.id,
+      if (deskId) {
+        await prisma.attendance.create({
+          data: {
+            user: {
+              connect: {
+                id: user.id,
+              },
             },
-          },
-          desk: {
-            connect: {
-              id: deskId,
+            desk: {
+              connect: {
+                id: deskId,
+              },
             },
+            date: new Date(date),
+            attended: isAttended,
           },
-          date: new Date(date),
-          attended: isAttended,
-        },
-      });
+        });
+      } else {
+        await prisma.attendance.create({
+          data: {
+            user: {
+              connect: {
+                id: user.id,
+              },
+            },
+            date: new Date(date),
+            attended: isAttended,
+          },
+        });
+      }
     } catch (error) {
       console.error(error);
       return fail(500, { message: "Failed to create attendance" });

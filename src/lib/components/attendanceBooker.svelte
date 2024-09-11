@@ -39,10 +39,10 @@
         <input name="date" type="date" value={dateString} required/>
       </label>
       <label>
-        <input name="attended" type="radio" required/> At office
+        <input name="attended" type="radio"/> At office
       </label>
       <label class="invisible">
-        <input name="deskIdString" type="number" value={selectedDesk?.id} required/>
+        <input name="deskIdString" type="number" value={selectedDesk?.id}/>
       </label>
       {#if selectedDesk}
         <p>Selected Desk: {selectedDesk.id}</p>
