@@ -24,7 +24,6 @@ export const actions: Actions = {
       }
 
       const token = createJwtToken({ id: user.id });
-
       setAuthCookie(cookies, token);
 
       throw redirect(303, "/");
